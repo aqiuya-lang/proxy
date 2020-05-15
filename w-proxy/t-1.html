@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test">
+        name: {name}
+
+    </div>
+    <script>
+       let el = document.getElementById('test');
+       let datainner = {
+           name: 'aqiuya',
+  
+       }
+       let template = el.innerHTML;
+       let data = new Proxy(datainner, {
+           set(obj, name, value) {
+               console.log(`${name} 的值被操纵成了 ${value}`);
+               obj[name] = value;
+               console.log('数据改变了');
+               function render() {
+                    el.innerHTML = template.replace(/\{\w+\}/g, str=>{
+                    str = name;
+                    console.log(datainner[str]);
+                    return datainner[str]
+                    })
+                };
+                render();
+              
+           }
+           
+       });
+       data.name = 'jingjing';
+    
+     
+
+       
+    </script>
+
+
+</body>
+</html>
